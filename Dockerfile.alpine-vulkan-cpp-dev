@@ -1,7 +1,6 @@
 # Use an official Alpine runtime as a parent image
 FROM alpine:latest
 
-
 # Set the working directory in Docker
 WORKDIR /app
 
@@ -16,7 +15,7 @@ RUN apk update && \
     llvm \
     clang \
     ninja \
-    git \ 
+    git \
     mesa-dev \
     libx11-dev \
     libxcb-dev && \
@@ -24,4 +23,5 @@ RUN apk update && \
     ./vcpkg/bootstrap-vcpkg.sh && \
     rm -rf /var/cache/apk/*
 
+ENV PATH="/app/vcpkg:${PATH}"
 ENV CMAKE_TOOLCHAIN_FILE=/app/vcpkg/scripts/buildsystems/vcpkg.cmake
