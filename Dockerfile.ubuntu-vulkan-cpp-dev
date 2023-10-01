@@ -1,27 +1,27 @@
-# Use an official Alpine runtime as a parent image
-FROM alpine:latest
+# Use an official Ubuntu runtime as a parent image
+FROM ubuntu:latest
 
 # Set the working directory in Docker
 WORKDIR /app
 
 # Update and install dependencies
-RUN apk update && \
-    apk add --no-cache \
+RUN apt-get update && \
+    apt-get install -y \
     bash \
-    build-base \
+    build-essential \
     curl \
     zip \
     cmake \
     llvm \
     clang \
-    ninja \
+    ninja-build \
     git \
-    mesa-dev \
     libx11-dev \
-    libxcb-dev && \
+    libxcb1-dev && \
     git clone https://github.com/microsoft/vcpkg.git && \
     ./vcpkg/bootstrap-vcpkg.sh && \
-    rm -rf /var/cache/apk/*
+    rm -rf /var/lib/apt/lists/*  # Clean up the apt cache to reduce the image size
 
+# Update PATH and set CMAKE_TOOLCHAIN_FILE environment variable
 ENV PATH="/app/vcpkg:${PATH}"
 ENV CMAKE_TOOLCHAIN_FILE=/app/vcpkg/scripts/buildsystems/vcpkg.cmake

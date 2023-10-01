@@ -19,5 +19,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile.alpine-vulkan-cpp-dev
+          file: ./Dockerfile.ubuntu-vulkan-cpp-dev
           push: false
