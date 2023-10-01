@@ -1,20 +1,27 @@
 # Use an official Alpine runtime as a parent image
 FROM alpine:latest
 
+
 # Set the working directory in Docker
 WORKDIR /app
 
 # Update and install dependencies
 RUN apk update && \
     apk add --no-cache \
+    bash \
     build-base \
+    curl \
+    zip \
     cmake \
     llvm \
     clang \
-    python3 \
-    py3-pip \
+    ninja \
+    git \ 
     mesa-dev \
     libx11-dev \
     libxcb-dev && \
-    pip3 install --no-cache-dir conan && \
+    git clone https://github.com/microsoft/vcpkg.git && \
+    ./vcpkg/bootstrap-vcpkg.sh && \
     rm -rf /var/cache/apk/*
+
+ENV CMAKE_TOOLCHAIN_FILE=/app/vcpkg/scripts/buildsystems/vcpkg.cmake
