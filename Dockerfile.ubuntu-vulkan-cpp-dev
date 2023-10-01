@@ -12,6 +12,7 @@ RUN apt-get update && \
     apt-get install -y \
     bash \
     build-essential \
+    cppcheck \
     curl \
     zip \
     llvm \
