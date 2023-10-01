@@ -4,6 +4,9 @@ FROM ubuntu:latest
 # Set the working directory in Docker
 WORKDIR /app
 
+# Define argument for cmake version
+ARG CMAKE_VERSION=3.27.6
+
 # Update and install dependencies
 RUN apt-get update && \
     apt-get install -y \
@@ -11,9 +14,9 @@ RUN apt-get update && \
     build-essential \
     curl \
     zip \
-    cmake \
     llvm \
     clang \
+    clang-tidy \
     ninja-build \
     git \
     libx11-dev \
@@ -23,7 +26,12 @@ RUN apt-get update && \
     xorg-dev \
     libglu1-mesa-dev \
     pkg-config \
-    libvulkan-dev && \ 
+    libvulkan-dev && \
+    apt-get purge --auto-remove -y cmake && \
+    mkdir /tmp/cmake && \
+    curl -sSL https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.sh -o /tmp/cmake/installer.sh && \
+    sh /tmp/cmake/installer.sh --prefix=/usr/local --exclude-subdir --skip-license && \
+    rm -rf /tmp/cmake && \
     git clone https://github.com/microsoft/vcpkg.git && \
     ./vcpkg/bootstrap-vcpkg.sh && \
     rm -rf /var/lib/apt/lists/*
