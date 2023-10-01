@@ -22,10 +22,11 @@ RUN apt-get update && \
     libxcursor-dev \
     xorg-dev \
     libglu1-mesa-dev \
-    pkg-config && \
+    pkg-config \
+    libvulkan-dev && \ 
     git clone https://github.com/microsoft/vcpkg.git && \
     ./vcpkg/bootstrap-vcpkg.sh && \
-    rm -rf /var/lib/apt/lists/*  # Clean up the apt cache to reduce the image size
+    rm -rf /var/lib/apt/lists/*
 
 # Update PATH and set CMAKE_TOOLCHAIN_FILE environment variable
 ENV PATH="/app/vcpkg:${PATH}"
