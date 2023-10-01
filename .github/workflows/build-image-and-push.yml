@@ -23,6 +23,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile.alpine-vulkan-cpp-dev
+          file: ./Dockerfile.ubuntu-vulkan-cpp-dev
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/alpine-vulkan-cpp-dev:latest
+          tags: ghcr.io/${{ github.repository_owner }}/ubuntu-vulkan-cpp-dev:latest
