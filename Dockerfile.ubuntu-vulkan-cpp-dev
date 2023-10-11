@@ -33,10 +33,4 @@ RUN apt-get update && \
     curl -sSL https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.sh -o /tmp/cmake/installer.sh && \
     sh /tmp/cmake/installer.sh --prefix=/usr/local --exclude-subdir --skip-license && \
     rm -rf /tmp/cmake && \
-    git clone https://github.com/microsoft/vcpkg.git && \
-    ./vcpkg/bootstrap-vcpkg.sh && \
     rm -rf /var/lib/apt/lists/*
-
-# Update PATH and set CMAKE_TOOLCHAIN_FILE environment variable
-ENV PATH="/app/vcpkg:${PATH}"
-ENV CMAKE_TOOLCHAIN_FILE=/app/vcpkg/scripts/buildsystems/vcpkg.cmake
