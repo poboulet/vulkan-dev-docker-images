@@ -5,7 +5,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build-and-push:
+  build-and-push-linux:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,10 +19,32 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.PACKAGES_ACCESS_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image for Ubuntu
         uses: docker/build-push-action@v2
         with:
           context: .
           file: ./Dockerfile.ubuntu-vulkan-cpp-dev
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/ubuntu-vulkan-cpp-dev:latest
+
+  build-and-push-windows:
+    runs-on: windows-2022
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PACKAGES_ACCESS_TOKEN }}
+
+      - name: Build and push Docker image for Windows
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile.windows-vulkan-cpp-dev
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/windows-vulkan-cpp-dev:latest
