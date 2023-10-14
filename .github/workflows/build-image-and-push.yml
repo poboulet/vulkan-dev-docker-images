@@ -41,10 +41,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.PACKAGES_ACCESS_TOKEN }}
 
-      - name: Build and push Docker image for Windows
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./Dockerfile.windows-vulkan-cpp-dev
-          push: true
-          tags: ghcr.io/${{ github.repository_owner }}/windows-vulkan-cpp-dev:latest
+      - name: Build Docker image for Windows
+        run: docker build -f Dockerfile.windows-vulkan-cpp-dev -t ubuntu-vulkan-cpp-dev .
+
+      - name: Push Docker image for Windows
+        run: docker push ghcr.io/${{ github.repository_owner }}/windows-vulkan-cpp-dev:latest
