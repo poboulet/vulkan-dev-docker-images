@@ -1,0 +1,10 @@
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
+WORKDIR C:/app
+
+ARG CMAKE_VERSION=3.28
+
+RUN powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command \
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; \
+    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+RUN choco install -y git curl cmake ninja llvm zip
