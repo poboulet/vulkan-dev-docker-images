@@ -42,7 +42,7 @@ jobs:
           password: ${{ secrets.PACKAGES_ACCESS_TOKEN }}
 
       - name: Build Docker image for Windows
-        run: docker build -f Dockerfile.windows-vulkan-cpp-dev -t windows-vulkan-cpp-dev .
+        run: docker build -f Dockerfile.windows-vulkan-cpp-dev -t ghcr.io/${{ github.repository_owner }}/windows-vulkan-cpp-dev:latest .
 
       - name: Push Docker image for Windows
         run: docker push ghcr.io/${{ github.repository_owner }}/windows-vulkan-cpp-dev:latest
